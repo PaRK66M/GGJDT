@@ -20,6 +20,9 @@ public class EnemyMovement : MonoBehaviour
     //Attacking
     public bool canAttack = false;
 
+    //Jumping
+    public float jumping = 0;
+
     //Player
     public Transform player;
     private Vector2 targetPosition = Vector2.zero;
@@ -27,18 +30,29 @@ public class EnemyMovement : MonoBehaviour
     //Components
     public Rigidbody2D enemyRb;
     public GameObject attackRadius;
+    public EnemyAttackCheck attackScript;
     public GameManager gameManager;
+    public PowersManager powersManager;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").transform;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        if(player == null)
-        {
-            Debug.Log("Can't find player");
-        }
+        powersManager = GameObject.Find("PowersManager").GetComponent<PowersManager>();
+        InitialiseStats();
         attackDelay = attackDelayMax;
+    }
+
+    private void InitialiseStats()
+    {
+        //Stats
+        float enemyMoveSpeed = powersManager.enemyMoveSpeed;
+        float enemyJumpSpeed = powersManager.enemyJumpSpeed;
+        float enemyDamage = powersManager.enemyDamage;
+        float enemyHealth = powersManager.enemyHealth;
+        float attackDelayMax = powersManager.attackDelayMax;
+        float attackCooldownMax = powersManager.attackCooldownMax;
     }
 
     // Update is called once per frame
@@ -90,12 +104,12 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        enemyRb.MovePosition(new Vector2(enemyRb.position.x + enemyMoveSpeed * Time.fixedDeltaTime * direction, enemyRb.position.y));
+        enemyRb.MovePosition(new Vector2(enemyRb.position.x + enemyMoveSpeed * Time.fixedDeltaTime * direction, enemyRb.position.y + enemyJumpSpeed * Time.fixedDeltaTime * jumping));
     }
 
     private void Attack()
     {
-        Debug.Log("ATTACK");
+        attackScript.Attack(enemyDamage);
     }
 
     public void ResetAttackDelay()
@@ -112,4 +126,6 @@ public class EnemyMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+  
 }
