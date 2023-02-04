@@ -20,6 +20,9 @@ public class EnemyMovement : MonoBehaviour
     //Attacking
     public bool canAttack = false;
 
+    //Jumping
+    public float jumping = 0;
+
     //Player
     public Transform player;
     private Vector2 targetPosition = Vector2.zero;
@@ -90,7 +93,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        enemyRb.MovePosition(new Vector2(enemyRb.position.x + enemyMoveSpeed * Time.fixedDeltaTime * direction, enemyRb.position.y));
+        enemyRb.MovePosition(new Vector2(enemyRb.position.x + enemyMoveSpeed * Time.fixedDeltaTime * direction, enemyRb.position.y + enemyJumpSpeed * Time.fixedDeltaTime * jumping));
     }
 
     private void Attack()
@@ -112,4 +115,6 @@ public class EnemyMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+  
 }

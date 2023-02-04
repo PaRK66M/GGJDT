@@ -19,13 +19,17 @@ public class EnemyAttackCheck : MonoBehaviour
         
     }
 
+
     void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Player")
         {
             Debug.Log("Can attack");
             eMScript.canAttack = true;
+        }
+        else if (collision.gameObject.tag == "JumpZone")
+        {
+            eMScript.jumping = 1;
         }
     }
 
@@ -33,9 +37,12 @@ public class EnemyAttackCheck : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("He gone");
             eMScript.canAttack = false;
             eMScript.ResetAttackDelay();
+        }
+        else if (collision.gameObject.tag == "JumpZone")
+        {
+            eMScript.jumping = 0;
         }
     }
 }
