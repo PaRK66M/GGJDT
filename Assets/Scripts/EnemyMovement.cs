@@ -32,17 +32,27 @@ public class EnemyMovement : MonoBehaviour
     public GameObject attackRadius;
     public EnemyAttackCheck attackScript;
     public GameManager gameManager;
+    public PowersManager powersManager;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").transform;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        if(player == null)
-        {
-            Debug.Log("Can't find player");
-        }
+        powersManager = GameObject.Find("PowersManager").GetComponent<PowersManager>();
+        InitialiseStats();
         attackDelay = attackDelayMax;
+    }
+
+    private void InitialiseStats()
+    {
+        //Stats
+        float enemyMoveSpeed = powersManager.enemyMoveSpeed;
+        float enemyJumpSpeed = powersManager.enemyJumpSpeed;
+        float enemyDamage = powersManager.enemyDamage;
+        float enemyHealth = powersManager.enemyHealth;
+        float attackDelayMax = powersManager.attackDelayMax;
+        float attackCooldownMax = powersManager.attackCooldownMax;
     }
 
     // Update is called once per frame

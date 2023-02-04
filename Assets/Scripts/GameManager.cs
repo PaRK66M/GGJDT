@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
 
     //GameObjects
     public EnemySpawnManager spawner;
+    public PowersManager powersManager;
+
+    //Variables
+    public bool newWaveSpawn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +27,8 @@ public class GameManager : MonoBehaviour
     {
         if(enemiesAlive <= 0)
         {
-            NewWave();
+            
+
         }
     }
 
@@ -32,5 +37,6 @@ public class GameManager : MonoBehaviour
         waveNumber++;
         enemiesAlive = waveNumber;
         spawner.NewWave(waveNumber);
+        newWaveSpawn = false;
     }
 }
