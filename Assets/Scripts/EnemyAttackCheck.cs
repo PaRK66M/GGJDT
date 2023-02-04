@@ -19,18 +19,21 @@ public class EnemyAttackCheck : MonoBehaviour
         
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
+        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("Can attack");
             eMScript.canAttack = true;
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("He gone");
             eMScript.canAttack = false;
             eMScript.ResetAttackDelay();
         }
