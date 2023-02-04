@@ -7,16 +7,18 @@ public class EnemyAttackCheck : MonoBehaviour
     public Collider2D attackRadius;
     public EnemyMovement eMScript;
 
-    // Start is called before the first frame update
-    void Start()
+    public bool isAttacking = false;
+    public float damage = 0;
+
+    private void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Attack(float currentDamage)
     {
-        
+        isAttacking = true;
+        damage = currentDamage;
     }
 
 
@@ -24,8 +26,11 @@ public class EnemyAttackCheck : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Can attack");
             eMScript.canAttack = true;
+            if (isAttacking)
+            {
+                //collision.gameObject.GetComponent<>().health -= damage;
+            }
         }
         else if (collision.gameObject.tag == "JumpZone")
         {

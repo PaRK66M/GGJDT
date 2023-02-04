@@ -30,6 +30,7 @@ public class EnemyMovement : MonoBehaviour
     //Components
     public Rigidbody2D enemyRb;
     public GameObject attackRadius;
+    public EnemyAttackCheck attackScript;
     public GameManager gameManager;
 
     // Start is called before the first frame update
@@ -98,7 +99,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Attack()
     {
-        Debug.Log("ATTACK");
+        attackScript.Attack(enemyDamage);
     }
 
     public void ResetAttackDelay()
