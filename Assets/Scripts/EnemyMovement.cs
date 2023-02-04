@@ -20,6 +20,9 @@ public class EnemyMovement : MonoBehaviour
     //Attacking
     public bool canAttack = false;
 
+    //Jumping
+    public float jumping = 0;
+
     //Player
     public Transform player;
     private Vector2 targetPosition = Vector2.zero;
@@ -27,16 +30,29 @@ public class EnemyMovement : MonoBehaviour
     //Components
     public Rigidbody2D enemyRb;
     public GameObject attackRadius;
+    public EnemyAttackCheck attackScript;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player").transform;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if(player == null)
+        {
+            Debug.Log("Can't find player");
+        }
         attackDelay = attackDelayMax;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            TakeDamage(5);
+        }
+
         if (!canAttack)
         {
             targetPosition = new Vector2(player.position.x, player.position.y);
@@ -46,15 +62,20 @@ public class EnemyMovement : MonoBehaviour
                 direction = 1.0f;
                 transform.SetPositionAndRotation(transform.position, new Quaternion(0, 0, 0, 0));
             }
-            else
+            else if (transform.position.x > targetPosition.x)
             {
                 direction = -1.0f;
                 transform.SetPositionAndRotation(transform.position, new Quaternion(0, 180, 0, 0));
             }
+            else
+            {
+                direction = 0.0f;
+            }
         }
         else
         {
-            if(attackDelay > 0)
+            direction = 0.0f;
+            if (attackDelay > 0)
             {
                 attackDelay -= 1;
             }
@@ -73,16 +94,28 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        enemyRb.MovePosition(new Vector2(enemyRb.position.x + enemyMoveSpeed * Time.fixedDeltaTime * direction, enemyRb.position.y));
+        enemyRb.MovePosition(new Vector2(enemyRb.position.x + enemyMoveSpeed * Time.fixedDeltaTime * direction, enemyRb.position.y + enemyJumpSpeed * Time.fixedDeltaTime * jumping));
     }
 
     private void Attack()
     {
-        Debug.Log("ATTACK");
+        attackScript.Attack(enemyDamage);
     }
 
     public void ResetAttackDelay()
     {
         attackDelay = attackDelayMax;
     }
+
+    public void TakeDamage(float damage)
+    {
+        enemyHealth -= damage;
+        if(enemyHealth <= 0)
+        {
+            gameManager.enemiesAlive--;
+            Destroy(gameObject);
+        }
+    }
+
+  
 }
