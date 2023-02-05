@@ -12,8 +12,11 @@ public class GameManager : MonoBehaviour
     public EnemySpawnManager spawner;
     public PowersManager powersManager;
 
+    //UI
+    public GameObject DefeatScreen;
+
     //Variables
-    public bool newWaveSpawn = false;
+    public bool displayingPowers = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +30,17 @@ public class GameManager : MonoBehaviour
     {
         if(enemiesAlive <= 0)
         {
-            
-
+            if (!displayingPowers)
+            {
+                powersManager.ShowPowers();
+                displayingPowers = true;
+            }
         }
+    }
+
+    public void GameOver()
+    {
+        DefeatScreen.SetActive(true);
     }
 
     public void NewWave()
@@ -37,6 +48,6 @@ public class GameManager : MonoBehaviour
         waveNumber++;
         enemiesAlive = waveNumber;
         spawner.NewWave(waveNumber);
-        newWaveSpawn = false;
+        displayingPowers = false;
     }
 }

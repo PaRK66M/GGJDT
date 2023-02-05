@@ -12,8 +12,16 @@ public class PowersManager : MonoBehaviour
     public float attackDelayMax = 25.0f;
     public float attackCooldownMax = 25.0f;
 
-    //Variables
-    public bool choosingPower = false;
+    //Powers
+    public int[] availablePowers;
+    public string[] powersDescription;
+
+    //UI
+    public GameObject displayPowers;
+    public TMPro.TextMeshProUGUI[] textBox;
+
+    //Game Objects
+    public GameManager gameManagerScript;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +32,39 @@ public class PowersManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (choosingPower)
-        {
 
-        }
     }
 
+    public void ShowPowers()
+    {
+        availablePowers[0] = Random.Range(0, 2);
+        do
+        {
+            availablePowers[1] = Random.Range(0, 2);
+        } while (availablePowers[1] != availablePowers[0]);
+        do
+        {
+            availablePowers[2] = Random.Range(0, 2);
+        } while (availablePowers[2] != availablePowers[0] && availablePowers[2] != availablePowers[1]);
+
+        displayPowers.SetActive(true);
+    }
+
+    public void SelectPower(int choice)
+    {
+        switch (availablePowers[choice])
+        {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+        displayPowers.SetActive(false);
+        gameManagerScript.NewWave();
+    }
 
 }
