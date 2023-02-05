@@ -29,7 +29,7 @@ public class EnemyAttackCheck : MonoBehaviour
             eMScript.canAttack = true;
             if (isAttacking)
             {
-                //collision.gameObject.GetComponent<>().health -= damage;
+                collision.gameObject.GetComponent<PlayerMovement>().playerHealth -= damage;
                 isAttacking = false;
             }
         }

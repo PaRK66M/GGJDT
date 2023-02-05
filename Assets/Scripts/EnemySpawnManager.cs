@@ -50,7 +50,8 @@ public class EnemySpawnManager : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        Instantiate(enemies[0], spawnPoints[0].transform.position, spawnPoints[0].transform.rotation);
+        int spawnPoint = Random.Range(0, 5);
+        Instantiate(enemies[0], spawnPoints[spawnPoint].transform.position, spawnPoints[spawnPoint].transform.rotation);
     }
 
     public void NewWave(int newWaveNumber)
