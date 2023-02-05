@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 8f;
     public float jumpingPower = 18f;
     private bool isFacingRight = true;
-    public float playerHealth = 6.0f;
+    public float playerHealth = 10.0f;
     public float playerDamage = 10.0f;
 
     bool ifAlive = true;
@@ -24,6 +24,12 @@ public class PlayerMovement : MonoBehaviour
 
     public GameManager thatManager;
 
+    public healthBar healthThing;
+
+    void Start()
+    {
+        healthThing.SetMaxHealth(playerHealth);
+    }
     void Update()
     {
         if(ifAlive)
@@ -52,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 ifAlive = false;
             }
+            healthThing.SetHealth(playerHealth);
         }
 
         if(!ifAlive)
