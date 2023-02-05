@@ -32,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Attack();
+        }
         Flip();
     }
 
@@ -70,5 +75,14 @@ public class PlayerMovement : MonoBehaviour
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
+    }
+
+    void Attack()
+    {
+        //play an attack animation
+
+        //detect enemies in range of attack
+
+        //damage them
     }
 }
