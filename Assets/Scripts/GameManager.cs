@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     public PowersManager powersManager;
 
     //UI
-    public GameObject DefeatScreen;
+    public GameObject defeatScreen;
+    public TMPro.TextMeshProUGUI waveNumberDisplay;
 
     //Variables
     public bool displayingPowers = false;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         waveNumber = 0;
+        waveNumberDisplay.text = waveNumber.ToString();
         NewWave();
     }
 
@@ -40,13 +42,14 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        DefeatScreen.SetActive(true);
+        defeatScreen.SetActive(true);
     }
 
     public void NewWave()
     {
         waveNumber++;
         enemiesAlive = waveNumber;
+        waveNumberDisplay.text = waveNumber.ToString();
         spawner.NewWave(waveNumber);
         displayingPowers = false;
     }

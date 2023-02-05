@@ -136,6 +136,14 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(transform.position.y >= targetPosition.y || canAttack)
+        {
+            jumping = 0;
+        }
+        if(transform.position.x - targetPosition.x < 0.1 && transform.position.x - targetPosition.x > -0.1)
+        {
+            direction = 0;
+        }
         enemyRb.MovePosition(new Vector2(enemyRb.position.x + enemyMoveSpeed * Time.fixedDeltaTime * direction, enemyRb.position.y + enemyJumpSpeed * Time.fixedDeltaTime * jumping));
     }
 

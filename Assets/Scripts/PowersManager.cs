@@ -47,6 +47,10 @@ public class PowersManager : MonoBehaviour
             availablePowers[2] = Random.Range(0, 2);
         } while (availablePowers[2] != availablePowers[0] && availablePowers[2] != availablePowers[1]);
 
+        for(int i = 0; i < 3; i++)
+        {
+            textBox[i].text = powersDescription[availablePowers[i]];
+        }
         displayPowers.SetActive(true);
     }
 
