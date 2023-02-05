@@ -8,8 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 8f;
     public float jumpingPower = 18f;
     private bool isFacingRight = true;
-    public float playerHealth = 6.0f;
-    public float playerDamage = 10.0f;
+    public float playerHealthMax = 10.0f;
+    public float playerHealth = 10.0f;
+    public float playerDamage = 5.0f;
 
     bool ifAlive = true;
     public Animator animator;

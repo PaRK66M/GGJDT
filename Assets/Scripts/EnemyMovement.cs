@@ -21,6 +21,7 @@ public class EnemyMovement : MonoBehaviour
     public bool canAttack = false;
     public bool communicatedAttack = true;
     public float deathCounter = 10.0f;
+    public bool dead = false;
 
     //Jumping
     public float jumping = 0;
@@ -162,10 +163,11 @@ public class EnemyMovement : MonoBehaviour
     {
         direction = 0.0f;
         enemyHealth -= damage;
-        if(enemyHealth <= 0)
+        if(enemyHealth <= 0 && !dead)
         {
             gameManager.enemiesAlive--;
             anim.SetBool("Dead", true);
+            dead = true;
         }
         else
         {

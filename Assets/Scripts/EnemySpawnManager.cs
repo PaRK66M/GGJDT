@@ -50,7 +50,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        int spawnPoint = Random.Range(0, 5);
+        int spawnPoint = Random.Range(0, 11);
         Instantiate(enemies[0], spawnPoints[spawnPoint].transform.position, spawnPoints[spawnPoint].transform.rotation);
     }
 
