@@ -8,14 +8,13 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 8f;
     private float jumpingPower = 18f;
     private bool isFacingRight = true;
+    public float playerHealth = 6.0f;
 
     public Animator animator;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
-
-    const float k_GroundRadius = 0.2f;
 
     void Update()
     {
@@ -55,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    public void OnLanding()
+    {
+        animator.SetBool("isJumping", false);
     }
 
     private void Flip()
