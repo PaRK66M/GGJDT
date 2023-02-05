@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    private float horizontal;
+    private float speed = 8f;
+    private float jumpingPower = 18f;
+    private bool isFacingRight = true;
+
+    public Animator animator;
+
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+
+    const float k_GroundRadius = 0.2f;
+
+    void Update()
+    {
+        horizontal = Input.GetAxisRaw("Horizontal");
+
+        animator.SetFloat("runSpeed", Mathf.Abs(horizontal));
+
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            animator.SetBool("isJumping", true);
+        }
+
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
+        Flip();
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
+        //Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, k_GroundRadius, groundLayer);
+
+        //for (int i = 0; i < colliders.Length; i++)
+        //{
+        //    if (colliders[i].gameObject != gameObject)
+        //    {
+        //        animator.SetBool("isJumping", false);
+        //        break;
+        //    }
+        //}
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private void Flip()
+    {
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+}
