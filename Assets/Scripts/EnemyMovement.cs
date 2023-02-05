@@ -61,11 +61,6 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            TakeDamage(5);
-        }
-
         if (!communicatedAttack)
         {
             if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "EnemyAttack")
