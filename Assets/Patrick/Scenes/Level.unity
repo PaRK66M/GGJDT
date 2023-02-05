@@ -8200,7 +8200,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   thatManager: {fileID: 1114339003}
-  healthThing: {fileID: 2049383296
+  healthThing: {fileID: 2049383296}
 --- !u!95 &1934110228
 Animator:
   serializedVersion: 5
