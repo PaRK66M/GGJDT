@@ -257,6 +257,7 @@ MonoBehaviour:
   direction: 0
   canAttack: 0
   communicatedAttack: 1
+  deathCounter: 10
   jumping: 0
   player: {fileID: 0}
   enemyRb: {fileID: 8163286808586259286}
@@ -301,7 +302,7 @@ Animator:
   m_GameObject: {fileID: 8163286808586259280}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a0a154186818fbd49be39f46dc2bade6, type: 2}
+  m_Controller: {fileID: 9100000, guid: be81331137972b948ab093ffd32954dc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
