@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     //UI
     public GameObject defeatScreen;
     public TMPro.TextMeshProUGUI waveNumberDisplay;
+    public TMPro.TextMeshProUGUI defeatTextDisplay;
 
     //Variables
     public bool displayingPowers = false;
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        defeatTextDisplay.text = waveNumber.ToString();
         defeatScreen.SetActive(true);
     }
 
