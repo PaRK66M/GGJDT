@@ -19,6 +19,8 @@ public class EnemyMovement : MonoBehaviour
 
     //Attacking
     public bool canAttack = false;
+    public bool communicatedAttack = true;
+    public float deathCounter = 10.0f;
 
     //Jumping
     public float jumping = 0;
@@ -33,6 +35,7 @@ public class EnemyMovement : MonoBehaviour
     public EnemyAttackCheck attackScript;
     public GameManager gameManager;
     public PowersManager powersManager;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -63,41 +66,75 @@ public class EnemyMovement : MonoBehaviour
             TakeDamage(5);
         }
 
-        if (!canAttack)
+        if (!communicatedAttack)
+        {
+            if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "EnemyAttack")
+            {
+                attackScript.isAttacking = false;
+                anim.SetBool("Attacking", false);
+                communicatedAttack = true;
+            }
+        }
+
+        if(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "EnemyIdle")
+        {
+            anim.SetBool("Attacking", false);
+            anim.SetBool("Damaged", false);
+        }
+        
+
+        if (!canAttack && (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "EnemyIdle" || anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "EnemyMovement"))
         {
             targetPosition = new Vector2(player.position.x, player.position.y);
 
             if (transform.position.x < targetPosition.x)
             {
+                anim.SetBool("Moving", true);
                 direction = 1.0f;
-                transform.SetPositionAndRotation(transform.position, new Quaternion(0, 0, 0, 0));
+                transform.SetPositionAndRotation(transform.position, new Quaternion(0, 180, 0, 0));
             }
             else if (transform.position.x > targetPosition.x)
             {
+                anim.SetBool("Moving", true);
                 direction = -1.0f;
-                transform.SetPositionAndRotation(transform.position, new Quaternion(0, 180, 0, 0));
+                transform.SetPositionAndRotation(transform.position, new Quaternion(0, 0, 0, 0));
             }
             else
             {
+                anim.SetBool("Moving", false);
                 direction = 0.0f;
             }
         }
-        else
+        else if(canAttack && anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "EnemyDeath" && anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != "EnemyAttack")
         {
+            anim.SetBool("Moving", false);
             direction = 0.0f;
             if (attackDelay > 0)
             {
                 attackDelay -= 1;
+                anim.SetBool("Attacking", false);
             }
             else if (attackCooldown > 0)
             {
                 attackCooldown -= 1;
+                anim.SetBool("Attacking", false);
             }
             else
             {
                 Attack();
+                communicatedAttack = false;
                 attackCooldown = attackCooldownMax;
             }
+        }
+        else if(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "EnemyDeath")
+        {
+            direction = 0.0f;
+            deathCounter -= 1;
+            if(deathCounter <= 0)
+            {
+                Destroy(gameObject);
+            }
+            
         }
         
     }
@@ -110,6 +147,7 @@ public class EnemyMovement : MonoBehaviour
     private void Attack()
     {
         attackScript.Attack(enemyDamage);
+        anim.SetBool("Attacking", true);
     }
 
     public void ResetAttackDelay()
@@ -119,11 +157,16 @@ public class EnemyMovement : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        direction = 0.0f;
         enemyHealth -= damage;
         if(enemyHealth <= 0)
         {
             gameManager.enemiesAlive--;
-            Destroy(gameObject);
+            anim.SetBool("Dead", true);
+        }
+        else
+        {
+            anim.SetBool("Damaged", true);
         }
     }
 

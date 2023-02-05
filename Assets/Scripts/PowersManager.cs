@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PowersManager : MonoBehaviour
 {
-    //Scripts
-    public EnemyMovement enemyStats;
-
     //Enemy stats
     public float enemyMoveSpeed = 5.0f;
     public float enemyJumpSpeed = 5.0f;

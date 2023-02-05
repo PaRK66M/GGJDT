@@ -30,6 +30,7 @@ public class EnemyAttackCheck : MonoBehaviour
             if (isAttacking)
             {
                 //collision.gameObject.GetComponent<>().health -= damage;
+                isAttacking = false;
             }
         }
         else if (collision.gameObject.tag == "JumpZone")
