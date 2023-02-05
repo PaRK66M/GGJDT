@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
+    public Transform attackPoint;
+    public float attackRange = 0.65f;
+    public LayerMask enemyLayers;
+
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -43,17 +47,6 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-
-        //Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, k_GroundRadius, groundLayer);
-
-        //for (int i = 0; i < colliders.Length; i++)
-        //{
-        //    if (colliders[i].gameObject != gameObject)
-        //    {
-        //        animator.SetBool("isJumping", false);
-        //        break;
-        //    }
-        //}
     }
 
     private bool IsGrounded()
@@ -80,9 +73,23 @@ public class PlayerMovement : MonoBehaviour
     void Attack()
     {
         //play an attack animation
-
+        animator.SetTrigger("Attack");
         //detect enemies in range of attack
 
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
         //damage them
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("We hit" + enemy.name);
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
