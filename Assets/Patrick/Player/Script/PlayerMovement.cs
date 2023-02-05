@@ -25,6 +25,12 @@ public class PlayerMovement : MonoBehaviour
 
     public GameManager thatManager;
 
+    public healthBar healthThing;
+
+    void Start()
+    {
+        healthThing.SetMaxHealth(playerHealth);
+    }
     void Update()
     {
         if(ifAlive)
@@ -53,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 ifAlive = false;
             }
+            healthThing.SetHealth(playerHealth);
         }
 
         if(!ifAlive)
